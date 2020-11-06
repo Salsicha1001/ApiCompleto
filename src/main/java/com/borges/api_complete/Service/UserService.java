@@ -2,6 +2,7 @@ package com.borges.api_complete.Service;
 
 
 import com.borges.api_complete.Firebase.FireInit;
+import com.borges.api_complete.Model.DTO.CredDto;
 import com.borges.api_complete.Model.UserModel;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.Timestamp;
@@ -27,9 +28,34 @@ public class UserService {
 
     @Autowired
     private FireInit fireInit;
-@Autowired
-private BCryptPasswordEncoder pe;
+    @Autowired
+    private BCryptPasswordEncoder pe;
 
+
+    public Object loginUser(CredDto user) throws ExecutionException, InterruptedException {
+        String email = user.getEmail();
+        UserModel login = new UserModel();
+        CollectionReference users = fireInit.getdb().collection("users");
+        Query query = users.whereEqualTo("email", email);
+        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+        for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+            login = document.toObject(UserModel.class);
+            login.setId(document.getId());
+        }
+        if(login.getEmail() == null){
+            return null;
+        }else{
+            System.out.println(login);
+            String pass = login.getPassword();
+            String password = user.getPassword();
+
+            if(pe.matches(password, pass) == true){
+                return login;
+            }else {
+                return null;
+            }
+        }
+    }
 
     public Object insertAuth(UserModel u) throws FirebaseAuthException {
         try {
