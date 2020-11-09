@@ -3,6 +3,8 @@ package com.borges.api_complete.Controller;
 
 import com.borges.api_complete.Model.DTO.CardDTO;
 import com.borges.api_complete.Service.CardYugiohService;
+
+
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +31,14 @@ public class CardController {
         return (List) cardService.getCardsUser(email);
     }
 
+    @GetMapping(value = "/all")
+    public Object getAll(@RequestParam(value ="offset", defaultValue = "0")Integer offset,
+                       @RequestParam(value="num", defaultValue = "10") Integer num) throws IOException, JSONException {
 
+
+       return cardService.findAll(num,offset);
+
+    }
     @GetMapping(value = "/spell")
     public String getSpellCard() throws IOException, JSONException {
         return cardService.findSpellCard();

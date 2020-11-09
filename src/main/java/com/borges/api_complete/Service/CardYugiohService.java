@@ -4,10 +4,14 @@ import com.borges.api_complete.Firebase.FireInit;
 import com.borges.api_complete.Model.DTO.CardDTO;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -98,6 +102,14 @@ public class CardYugiohService {
         JSONArray j = jsonObject.getJSONArray("data");
         return j.toString();
     }
+    public Object findAll(Integer num, Integer offset) throws IOException, JSONException {
+        PageRequest pageRequest=PageRequest.of(offset, num);
+
+        JSONObject jsonObject = readJsonFromUrl(url+"num="+pageRequest.getPageSize()+"&offset="+pageRequest.getPageNumber()+ ptbr);
+        return jsonObject.toString();
+
+    }
+
     public String findTrapCard() throws IOException, JSONException {
         JSONObject jsonObject = readJsonFromUrl(url+"type=trap%20card"+ ptbr);
         JSONArray j = jsonObject.getJSONArray("data");
