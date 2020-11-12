@@ -1,6 +1,7 @@
 package com.borges.api_complete.Controller;
 
 
+import com.borges.api_complete.Model.CardUser;
 import com.borges.api_complete.Model.DTO.CardDTO;
 import com.borges.api_complete.Service.CardYugiohService;
 
@@ -22,12 +23,12 @@ public class CardController {
 
 
     @PostMapping(value = "/add")
-    public Object CardAdd(@RequestBody CardDTO cardDTO) throws ExecutionException, InterruptedException {
-        return cardService.saveCardUser(cardDTO);
+    public Object CardAdd(@RequestBody CardUser card) throws ExecutionException, InterruptedException {
+        return cardService.saveCardUser(card);
     }
 
-    @GetMapping("/cart")
-    public List GetCardCart(@RequestBody String email){
+    @GetMapping("/cart/{email}")
+    public List GetCardCart(@PathVariable String email) throws ExecutionException, InterruptedException {
         return (List) cardService.getCardsUser(email);
     }
 
@@ -40,33 +41,45 @@ public class CardController {
 
     }
     @GetMapping(value = "/spell")
-    public String getSpellCard() throws IOException, JSONException {
-        return cardService.findSpellCard();
+    public Object getSpellCard(@RequestParam(value ="offset", defaultValue = "0")Integer offset,
+                               @RequestParam(value="num", defaultValue = "10") Integer num) throws IOException, JSONException {
+        return cardService.findSpellCard(offset, num);
     }
     @GetMapping(value = "/trap")
-    public String getTrapCard() throws IOException, JSONException {
-        return cardService.findTrapCard();
+    public String getTrapCard(@RequestParam(value ="offset", defaultValue = "0")Integer offset,
+                              @RequestParam(value="num", defaultValue = "10") Integer num) throws IOException, JSONException {
+        return cardService.findTrapCard(offset, num);
     }
     @GetMapping(value = "/trap/{race}")
-    public Object getTrapRaceCard(@PathVariable String race) throws IOException, JSONException {
-    return cardService.findRaceTrap(race);
+    public Object getTrapRaceCard(@PathVariable String race,
+                                  @RequestParam(value ="offset", defaultValue = "0")Integer offset,
+                                  @RequestParam(value="num", defaultValue = "10") Integer num) throws IOException, JSONException {
+    return cardService.findRaceTrap(race,offset, num);
     }
     @GetMapping(value = "/spell/{race}")
-    public Object getSpellRaceCard(@PathVariable String race) throws IOException, JSONException {
-        return cardService.findRaceSpell(race);
+    public Object getSpellRaceCard(@PathVariable String race,
+                                   @RequestParam(value ="offset", defaultValue = "0")Integer offset,
+                                   @RequestParam(value="num", defaultValue = "10") Integer num) throws IOException, JSONException {
+        return cardService.findRaceSpell(race,offset, num);
     }
 
     @GetMapping(value = "/monsterType/{type}")
-    public Object getTypeCardMonster(@PathVariable String type) throws IOException, JSONException {
-        return cardService.FindMonsterCard(type, null);
+    public Object getTypeCardMonster(@PathVariable String type,
+                                     @RequestParam(value ="offset", defaultValue = "0")Integer offset,
+                                     @RequestParam(value="num", defaultValue = "10") Integer num) throws IOException, JSONException {
+        return cardService.FindMonsterCard(type, null,offset, num);
     }
     @GetMapping(value = "/monsterRace/{race}")
-    public Object getRaceCardMonster(@PathVariable String race) throws IOException, JSONException {
-        return cardService.FindMonsterCard(null, race);
+    public Object getRaceCardMonster(@PathVariable String race,
+                                     @RequestParam(value ="offset", defaultValue = "0")Integer offset,
+                                     @RequestParam(value="num", defaultValue = "10") Integer num) throws IOException, JSONException {
+        return cardService.FindMonsterCard(null, race,offset, num);
     }
 
     @GetMapping(value = "/monster/{type}/{race}")
-    public Object getMonster(@PathVariable String type,@PathVariable String race) throws IOException, JSONException {
-        return cardService.FindMonsterCard(type, race);
+    public Object getMonster(@PathVariable String type,@PathVariable String race,
+                             @RequestParam(value ="offset", defaultValue = "0")Integer offset,
+                             @RequestParam(value="num", defaultValue = "10") Integer num) throws IOException, JSONException {
+        return cardService.FindMonsterCard(type, race,offset, num);
     }
 }

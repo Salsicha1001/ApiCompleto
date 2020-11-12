@@ -20,12 +20,12 @@ public class CardModel {
     private String linkval;
     private String linkmarkers;
     private String price;
-    private List img;
+    private List card_images;
 
     public CardModel() {
     }
 
-    public CardModel(int id, String name_en, String name, String type, String desc, int atk, int def, String level, String race, String attribute, String archetype, String scale, String linkval, String linkmarkers, String price, List img) {
+    public CardModel(int id, String name_en, String name, String type, String desc, int atk, int def, String level, String race, String attribute, String archetype, String scale, String linkval, String linkmarkers, String price, List card_images) {
         this.id = id;
         this.name_en = name_en;
         this.name = name;
@@ -41,7 +41,7 @@ public class CardModel {
         this.linkval = linkval;
         this.linkmarkers = linkmarkers;
         this.price = price;
-        this.img = img;
+        this.card_images = card_images;
     }
 
     public int getId() {
@@ -164,12 +164,12 @@ public class CardModel {
         this.price = price;
     }
 
-    public List getImg() {
-        return img;
+    public List getcard_images() {
+        return card_images;
     }
 
-    public void setImg(List img) {
-        this.img = img;
+    public void setcard_images(List card_images) {
+        this.card_images = card_images;
     }
 
     @Override
@@ -192,12 +192,12 @@ public class CardModel {
                 Objects.equals(linkval, cardModel.linkval) &&
                 Objects.equals(linkmarkers, cardModel.linkmarkers)&&
                  Objects.equals(price, cardModel.price)&&
-                Objects.equals(img, cardModel.img);
+                Objects.equals(card_images, cardModel.card_images);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name_en, name, type, desc, atk, def, level, race, attribute, archetype, scale, linkval, linkmarkers, price, img);
+        return Objects.hash(id, name_en, name, type, desc, atk, def, level, race, attribute, archetype, scale, linkval, linkmarkers, price, card_images);
     }
 
     @Override
@@ -218,7 +218,7 @@ public class CardModel {
                 ", linkval='" + linkval + '\'' +
                 ", linkmarkers='" + linkmarkers + '\'' +
                 ", price='" + price + '\'' +
-                "img = '"+img+'\''+
+                "img = '"+card_images+'\''+
                 '}';
     }
 }
