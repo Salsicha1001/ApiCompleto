@@ -32,6 +32,12 @@ public class CardController {
         return (List) cardService.getCardsUser(email);
     }
 
+    @GetMapping("/remove/{id}")
+    public Object removeFavorite(@PathVariable String id) throws ExecutionException, InterruptedException {
+        return cardService.deleteFavoriteCard(id);
+
+    }
+
     @GetMapping(value = "/all")
     public Object getAll(@RequestParam(value ="offset", defaultValue = "0")Integer offset,
                        @RequestParam(value="num", defaultValue = "10") Integer num) throws IOException, JSONException {

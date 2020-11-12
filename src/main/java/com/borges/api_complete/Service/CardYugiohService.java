@@ -48,6 +48,16 @@ public class CardYugiohService {
         return c;
     }
 
+    public Object deleteFavoriteCard(String id) throws ExecutionException, InterruptedException {
+        try {
+            ApiFuture<WriteResult> writeResult = fireInit.getdb().collection("cardsUser").document(id).delete();
+            return true;
+        }catch (Error e){
+            return e;
+        }
+    }
+
+
     public Object saveCardUser(CardUser card) throws ExecutionException, InterruptedException {
         try {
             ApiFuture<DocumentReference> add = fireInit.getdb().collection("cardsUser").add(card);
