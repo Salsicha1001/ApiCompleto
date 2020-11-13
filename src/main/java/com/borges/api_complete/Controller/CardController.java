@@ -26,6 +26,13 @@ public class CardController {
     public Object CardAdd(@RequestBody CardUser card) throws ExecutionException, InterruptedException {
         return cardService.saveCardUser(card);
     }
+    @GetMapping("/attribute/{attribute}")
+    public Object findClass(@PathVariable String attribute,
+            @RequestParam(value ="offset", defaultValue = "0")Integer offset,
+                            @RequestParam(value="num", defaultValue = "10") Integer num) throws IOException, JSONException {
+
+            return cardService.findClass(attribute,num, offset);
+    }
 
     @GetMapping("/cart/{email}")
     public List GetCardCart(@PathVariable String email) throws ExecutionException, InterruptedException {

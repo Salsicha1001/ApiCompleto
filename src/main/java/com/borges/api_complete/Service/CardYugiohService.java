@@ -37,6 +37,24 @@ public class CardYugiohService {
     private String url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?";
     private String ptbr = "&language=pt";
 
+
+
+
+
+    public String findClass(String atribute,Integer num, Integer offset) throws IOException, JSONException {
+        atribute = atribute.replace(" ","%20");
+        JSONObject jsonObject = readJsonFromUrl(url+"num="+num+"&offset="+offset+"&archetype="+atribute+ ptbr);
+        return jsonObject.toString();
+    }
+
+
+
+
+
+
+
+
+
     public Object getCardsUser(String email) throws ExecutionException, InterruptedException {
         ApiFuture<QuerySnapshot> future = fireInit.getdb().collection("cardsUser").whereEqualTo("user_email", email).get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
